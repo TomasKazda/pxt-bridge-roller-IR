@@ -1,7 +1,7 @@
 {
     "name": "pxt-bridge-roller",
     "version": "0.0.0",
-    "description": "",
+    "description": "servo controll for wooden bridge toy",
     "dependencies": {
         "core": "*",
         "radio": "*",
@@ -23,5 +23,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
