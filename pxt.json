@@ -1,5 +1,5 @@
 {
-    "name": "pxt-bridge-roller",
+    "name": "pxt-bridge-roller-IR",
     "version": "0.1.0",
     "description": "servo controll for wooden bridge toy",
     "dependencies": {
@@ -10,14 +10,16 @@
     "files": [
         "README.md",
         "main.blocks",
-        "main.ts"
+        "main.ts",
+        "servo.ts",
+        "semaphor.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "public": true,
     "targetVersions": {
-        "target": "3.1.58",
+        "target": "4.0.16",
         "targetId": "microbit"
     },
     "supportedTargets": [
