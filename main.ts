@@ -1,6 +1,6 @@
 function bridgeDown() {
     running = false
-    control.inBackground(function () { semaphor(4) })
+    control.inBackground(function () { semaphor(4, false) })
     most.down()
     basic.pause(1500)
     control.inBackground(function () { zavora1.up() })
@@ -13,7 +13,7 @@ function bridgeDown() {
 }
 function bridgeUp() {
     running = false
-    control.inBackground(function () { semaphor(6, false) })
+    control.inBackground(function () { semaphor(6, true) })
     control.inBackground(function () { zavora2.down() })
     zavora1.down()
     most.up()
@@ -48,29 +48,36 @@ input.onButtonPressed(Button.B, function () {
 
 basic.showIcon(IconNames.Sword)
 let running = false
-//let zavora2 = new BridgeServo(AnalogPin.P13, 800, 1900, 1800)
-//let zavora1 = new BridgeServo(AnalogPin.P14, 1150, 2025, 1925)
-//let most = new BridgeServo(AnalogPin.P15, 1600, 1250, 1250)
-let zavora2 = new BridgeServo(AnalogPin.P8, 1300, 2300, 1800)
-let zavora1 = new BridgeServo(AnalogPin.P2, 1200, 2100, 1700)
-let most = new BridgeServo(AnalogPin.P1, 1800, 1400, 1600)
+let zavora2 = new BridgeServo(AnalogPin.P8, 1300, 2300, 1300)
+let zavora1 = new BridgeServo(AnalogPin.P2, 1200, 2100, 1200)
+let most = new BridgeServo(AnalogPin.P1, 1900, 1300, 1900)
 most.speed = Speed.Immediately
-
 while (!input.logoIsPressed())
 {
     basic.pause(125)
 }
 most.down()
+zavora1.up()
+zavora2.up()
 basic.showIcon(IconNames.Happy)
 running = true
 
 basic.forever(function () {
-    //if (running) {
-            // if (running && !most.isDown()) {
-            //     bridgeDown()
-            // }
-    //}
-    //basic.pause(100)
+    if (running) {
+        let pin12 = pins.digitalReadPin(DigitalPin.P12)
+        let pin13 = pins.digitalReadPin(DigitalPin.P13)
+        let pin14 = pins.digitalReadPin(DigitalPin.P14)
+        let pin15 = pins.digitalReadPin(DigitalPin.P15)
+
+        if (running && !most.isDown() && (pin12 == 0 || pin13 == 0))
+        {
+            bridgeDown()
+        }            
+        if (running && most.isDown() && (pin14 == 0 || pin15 == 0)) {
+            bridgeUp()
+        }
+    }
+    basic.pause(100)
 })
 
 control.inBackground(function () {
@@ -80,18 +87,4 @@ control.inBackground(function () {
         most.callPulse();
         basic.pause(10) //100Hz
     }
-})
-
-pins.onPulsed(DigitalPin.P12, PulseValue.High, function () {
-    music.playTone(Note.C, music.beat(BeatFraction.Quarter))
-})
-
-pins.onPulsed(DigitalPin.P13, PulseValue.High, function () {
-    music.playTone(Note.D, music.beat(BeatFraction.Quarter))
-})
-pins.onPulsed(DigitalPin.P14, PulseValue.High, function () {
-    music.playTone(Note.E, music.beat(BeatFraction.Quarter))
-})
-pins.onPulsed(DigitalPin.P15, PulseValue.High, function () {
-    music.playTone(Note.F, music.beat(BeatFraction.Quarter))
 })
