@@ -2,10 +2,9 @@ function bridgeDown() {
     running = false
     control.inBackground(function () { semaphor(4, false) })
     most.down()
-    basic.pause(1500)
     control.inBackground(function () { zavora1.up() })
     control.inBackground(function () { zavora2.up() })
-    basic.pause(5500)
+    basic.pause(4000)
     zavora1.stop()
     zavora2.stop()
     most.stop()
@@ -17,7 +16,7 @@ function bridgeUp() {
     control.inBackground(function () { zavora2.down() })
     zavora1.down()
     most.up()
-    basic.pause(8000)
+    basic.pause(3000)
     zavora1.stop()
     zavora2.stop()
     most.stop()
@@ -29,7 +28,7 @@ input.onButtonPressed(Button.AB, function () {
     if (!most.isDown()) most.down()
     zavora1.down()
     zavora2.down()
-    basic.pause(4000)
+    basic.pause(2000)
     zavora1.stop()
     zavora2.stop()
     most.stop()
@@ -46,12 +45,19 @@ input.onButtonPressed(Button.B, function () {
     }
 })
 
+music.setVolume(16)
+
+/* safe pin: P0, P1, P2, P8, P9, P12, P16 */
+pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
+pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
+pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
+pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
 basic.showIcon(IconNames.Sword)
 let running = false
-let zavora2 = new BridgeServo(AnalogPin.P8, 1300, 2300, 1300)
-let zavora1 = new BridgeServo(AnalogPin.P2, 1200, 2100, 1200)
-let most = new BridgeServo(AnalogPin.P1, 1900, 1300, 1900)
-most.speed = Speed.Immediately
+let zavora2 = new BridgeServo(AnalogPin.P8, 1100, 2100, 1100)
+let zavora1 = new BridgeServo(AnalogPin.P2, 1150, 1950, 1150)
+let most = new BridgeServo(AnalogPin.P1, 1150, 1670, 1550)
+most.speed = Speed.Slow
 while (!input.logoIsPressed())
 {
     basic.pause(125)
@@ -60,6 +66,10 @@ most.down()
 zavora1.up()
 zavora2.up()
 basic.showIcon(IconNames.Happy)
+basic.pause(1000)
+zavora1.stop()
+zavora2.stop()
+most.stop()
 running = true
 
 basic.forever(function () {

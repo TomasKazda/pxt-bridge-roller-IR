@@ -9,7 +9,7 @@ enum Speed {
     Immediately = 0
 }
 class Servo {
-    private _pin: AnalogPin
+    private _pin: AnalogPin /* safe pin: P0, P1, P2, P8, P9, P12, P16 */
     protected _pulse: number
     private _speed: Speed = Speed.Normal
     private _pulseStep: number = 10
